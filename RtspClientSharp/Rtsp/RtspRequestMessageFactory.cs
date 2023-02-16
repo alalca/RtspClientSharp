@@ -7,7 +7,7 @@ namespace RtspClientSharp.Rtsp
         private static readonly Version ProtocolVersion = new Version(1, 0);
 
         private uint _cSeq;
-        private readonly Uri _rtspUri;
+        private Uri _rtspUri;
         private readonly string _userAgent;
 
         public Uri ContentBase { get; set; }
@@ -34,6 +34,12 @@ namespace RtspClientSharp.Rtsp
             return rtspRequestMessage;
         }
 
+        public RtspRequestMessage CreateDescribeRequest(Uri rtspUri)
+        {
+            _rtspUri = rtspUri;
+            
+            return CreateDescribeRequest();
+        }
         public RtspRequestMessage CreateSetupTcpInterleavedRequest(string trackName, int rtpChannel, int rtcpChannel)
         {
             Uri trackUri = GetTrackUri(trackName);

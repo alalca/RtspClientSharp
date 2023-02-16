@@ -75,7 +75,14 @@ namespace RtspClientSharp.Rtsp
 
             RtspRequestMessage describeRequest = _requestMessageFactory.CreateDescribeRequest();
             RtspResponseMessage describeResponse =
-                await _rtspTransportClient.EnsureExecuteRequest(describeRequest, token);
+                await _rtspTransportClient.ExecuteRequest(describeRequest, token);
+
+            if (describeResponse.StatusCode == RtspStatusCode.Found)
+            {
+                var newLocation = describeResponse.Headers[WellKnownHeaders.Location];
+                describeRequest = _requestMessageFactory.CreateDescribeRequest(new Uri(newLocation));
+                describeResponse = await _rtspTransportClient.EnsureExecuteRequest(describeRequest, token);
+            }
 
             string contentBaseHeader = describeResponse.Headers[WellKnownHeaders.ContentBase];
 
