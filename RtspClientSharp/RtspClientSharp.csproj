@@ -54,4 +54,9 @@ More info: https://github.com/BogdanovKirill/RtspClientSharp/issues/49</PackageR
     <DocumentationFile>bin\Release\netstandard2.0\RtspClientSharp.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
 </Project>

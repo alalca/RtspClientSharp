@@ -80,6 +80,8 @@ namespace RtspClientSharp.Rtsp
 
             string requestMessageString = requestMessage.ToString();
 
+            LoggerHelper.Logger.Verbose($"Request:{Environment.NewLine}{requestMessageString}.");
+
             int written = Encoding.ASCII.GetBytes(requestMessageString, 0, requestMessageString.Length, _buffer, 0);
             return WriteAsync(_buffer, 0, written);
         }
@@ -108,6 +110,8 @@ namespace RtspClientSharp.Rtsp
             var headersByteSegment =
                 new ArraySegment<byte>(_buffer, startOfResponse, endOfResponseHeaders - startOfResponse);
             RtspResponseMessage rtspResponseMessage = RtspResponseMessage.Parse(headersByteSegment);
+
+            LoggerHelper.Logger.Verbose($"Response:{Environment.NewLine}{rtspResponseMessage}.");
 
             string contentLengthString = rtspResponseMessage.Headers[WellKnownHeaders.ContentLength];
 
